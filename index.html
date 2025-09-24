@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Pedido Especial</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background: #fdf6e3;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 30px;
+      color: #444;
+    }
+
+    .btns {
+      display: flex;
+      gap: 20px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+      position: relative;
+    }
+
+    #sim {
+      background: #4caf50;
+      color: white;
+    }
+
+    #nao {
+      background: #f44336;
+      color: white;
+    }
+
+    /* Modal */
+    .modal {
+      display: none; /* escondido por padrão */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+      max-width: 400px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      font-size: 1.1rem;
+      position: relative;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Mamãe querida do meu coração, posso ir para Bom Jardim?</h1>
+
+  <div class="btns">
+    <button id="sim">Sim</button>
+    <button id="nao">Não</button>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <button class="close-btn" id="close">&times;</button>
+      <p>Muito obrigado mamãe querida por deixar eu ir, eu e sua nora ficamos muito felizes 😁</p>
+    </div>
+  </div>
+
+  <!-- Biblioteca de confete -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <script>
+    const simBtn = document.getElementById("sim");
+    const naoBtn = document.getElementById("nao");
+    const modal = document.getElementById("modal");
+    const closeBtn = document.getElementById("close");
+
+    // Abrir modal + confete
+    simBtn.addEventListener("click", () => {
+      modal.style.display = "flex";
+
+      confetti({
+        particleCount: 200,
+        spread: 100,
+        origin: { y: 0.6 }
+      });
+    });
+
+    // Fechar modal
+    closeBtn.addEventListener("click", () => {
+      modal.style.display = "none";
+    });
+
+    // Botão "Não" foge
+    naoBtn.addEventListener("mouseover", () => {
+      const btnRect = naoBtn.getBoundingClientRect();
+      const maxX = window.innerWidth - btnRect.width;
+      const maxY = window.innerHeight - btnRect.height;
+
+      const randomX = Math.floor(Math.random() * maxX);
+      const randomY = Math.floor(Math.random() * maxY);
+
+      naoBtn.style.position = "fixed";
+      naoBtn.style.left = randomX + "px";
+      naoBtn.style.top = randomY + "px";
+    });
+  </script>
+</body>
+</html>
